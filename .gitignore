@@ -1,0 +1,43 @@
+# Ignora los archivos binarios y de compilación
+bin/
+obj/
+
+# Ignora los archivos de usuario específicos
+*.user
+*.suo
+
+# Ignora los archivos de configuración local
+appsettings.Development.json
+
+# Ignora los archivos de salida de la aplicación
+out/
+publish/
+
+# Ignora los archivos de dependencias
+.vs/
+.vscode/
+.idea/
+
+# Ignora los archivos de logs y datos de depuración
+logs/
+*.log
+
+# Ignora los archivos de paquetes NuGet
+.nuget/
+packages/
+
+# Ignora los archivos de la base de datos local
+*.db
+*.sqlite
+
+# Ignora los archivos de la carpeta de node_modules (si usas algún frontend)
+node_modules/
+
+# Ignora los archivos de la carpeta de dist (si usas algún frontend)
+dist/
+
+# Ignora los archivos de la carpeta de wwwroot (si usas algún frontend)
+wwwroot/
+
+# Ignora los archivos de la carpeta de temp
+temp/
