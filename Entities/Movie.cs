@@ -14,5 +14,8 @@ namespace MoviesMinimalAPI.Entities
 
         [Unicode(false)]
         public string? Poster { get; set; }
+
+        // 1 : M from movies to comments
+        public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
