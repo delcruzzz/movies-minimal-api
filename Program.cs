@@ -39,6 +39,7 @@ builder.Services.AddSwaggerGen(); // this adds the swagger generator
 // add gender repository
 builder.Services.AddScoped<IGenderRepository, GenderRepository>(); // means that service is created once per request
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 // add file storage service
 builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
@@ -66,5 +67,6 @@ app.MapGet("/", [EnableCors(PolicyName = "free")] () => "Hello World!"); // this
 // map groups configurations
 app.MapGroup("/genders").MapGenders();
 app.MapGroup("/actors").MapActors();
+app.MapGroup("/movies").MapMovies();
 
 app.Run(); // this starts the app

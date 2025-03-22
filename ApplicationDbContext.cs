@@ -12,5 +12,6 @@ namespace MoviesMinimalAPI
         // add entity sets, i can use for configure the database
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Actor> Actors { get; set; }
+        public DbSet<Movie> Movies { get; set; }
     }
 }
