@@ -18,6 +18,9 @@ namespace MoviesMinimalAPI.Utils
             CreateMap<Movie, CreateMovieDto>().ReverseMap()
                 .ForMember(x => x.Poster, options => options.Ignore()); // ignore the Poster property when mapping from CreateMovieDto to Movie
             CreateMap<Movie, MovieDto>();
+
+            CreateMap<Comment, CreateCommentDto>().ReverseMap();
+            CreateMap<Comment, CommentDto>();
         }
     }
 }
