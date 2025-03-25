@@ -9,6 +9,9 @@ namespace MoviesMinimalAPI.Entities
         [Required]
         [StringLength(50)]
         public string Name { get; set; } = null!;
+
+        // 1 : M from gender to gendersmovies
+        public List<GenderMovie> GenderMovies { get; set; } = new List<GenderMovie>();
     }
 }
 

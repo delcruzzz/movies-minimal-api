@@ -11,6 +11,7 @@ namespace MoviesMinimalAPI.Repositories
         Task<Gender?> GetByIdAsync(int id);
 
         Task<bool> IsExistsAsync(int id);
+        Task<List<int>> ExistsAsync(List<int> ids);
 
         Task UpdateAsync(Gender data);
 

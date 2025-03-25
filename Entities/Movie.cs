@@ -17,5 +17,8 @@ namespace MoviesMinimalAPI.Entities
 
         // 1 : M from movies to comments
         public List<Comment> Comments { get; set; } = new List<Comment>();
+
+        // 1 : M from movies to gendersmovies
+        public List<GenderMovie> GenderMovies { get; set; } = new List<GenderMovie>();
     }
 }

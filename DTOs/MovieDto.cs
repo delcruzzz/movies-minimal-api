@@ -7,5 +7,8 @@
         public bool onCinemas { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string? Poster { get; set; }
+
+        // comments dto
+        public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
     }
 }

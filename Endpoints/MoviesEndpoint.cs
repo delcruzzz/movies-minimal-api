@@ -19,6 +19,7 @@ namespace MoviesMinimalAPI.Endpoints
             routeGroupBuilder.MapPost("/", Create).DisableAntiforgery();
             routeGroupBuilder.MapPut("/{id:int}", Update);
             routeGroupBuilder.MapDelete("/{id:int}", Delete);
+            routeGroupBuilder.MapPost("/{id:int}/assign-genders", GendersAssign);
 
             return routeGroupBuilder;
         }
@@ -87,6 +88,30 @@ namespace MoviesMinimalAPI.Endpoints
 
             await movieRepository.DeleteAsync(id);
             await outputCacheStore.EvictByTagAsync("get-all-movies", default);
+            return TypedResults.NoContent();
+        }
+
+        static async Task<Results<NoContent, NotFound, BadRequest<string>>> GendersAssign(int id, List<int> gendersIds, IMovieRepository movieRepository, IGenderRepository genderRepository)
+        {
+            if (! await movieRepository.IsExistsAsync(id))
+            {
+                return TypedResults.NotFound();
+            }
+
+            var gendersAlreadyExists = new List<int>();
+
+            if (gendersAlreadyExists.Count == 0)
+            {
+                gendersAlreadyExists = await genderRepository.ExistsAsync(gendersIds);
+            }
+
+            if (gendersAlreadyExists.Count != gendersIds.Count)
+            {
+                var gendersNoAlreadyExists = gendersIds.Except(gendersAlreadyExists);
+                return TypedResults.BadRequest($"genders not exists: {string.Join(", ", gendersNoAlreadyExists)}");
+            }
+
+            await movieRepository.AssignGendersAsync(id, gendersIds);
             return TypedResults.NoContent();
         }
     }

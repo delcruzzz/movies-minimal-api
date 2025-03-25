@@ -39,6 +39,11 @@ namespace MoviesMinimalAPI.Repositories
             return await _applicationDbContext.Genders.AnyAsync(g => g.Id == id);
         }
 
+        public async Task<List<int>> ExistsAsync(List<int> ids)
+        {
+            return await _applicationDbContext.Genders.Where(g => ids.Contains(g.Id)).Select(g => g.Id).ToListAsync();
+        }
+
         public async Task UpdateAsync(Gender data)
         {
             _applicationDbContext.Update(data);
