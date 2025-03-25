@@ -48,5 +48,10 @@ namespace MoviesMinimalAPI.Repositories
             applicationDbContext.Update(data);
             await applicationDbContext.SaveChangesAsync();
         }
+
+        public async Task<List<int>> ExistsAsync(List<int> ids)
+        {
+            return await applicationDbContext.Actors.Where(a => ids.Contains(a.Id)).Select(a => a.Id).ToListAsync();
+        }
     }
 }

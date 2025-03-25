@@ -20,6 +20,7 @@ namespace MoviesMinimalAPI.Endpoints
             routeGroupBuilder.MapPut("/{id:int}", Update);
             routeGroupBuilder.MapDelete("/{id:int}", Delete);
             routeGroupBuilder.MapPost("/{id:int}/assign-genders", GendersAssign);
+            routeGroupBuilder.MapPost("/{id:int}/assign-actors", ActorsAssign);
 
             return routeGroupBuilder;
         }
@@ -112,6 +113,33 @@ namespace MoviesMinimalAPI.Endpoints
             }
 
             await movieRepository.AssignGendersAsync(id, gendersIds);
+            return TypedResults.NoContent();
+        }
+
+        static async Task<Results<NoContent, NotFound, BadRequest<string>>> ActorsAssign(int id, List<AssignActorMovieDto> actorsData, IMovieRepository movieRepository, IActorRepository actorRepository, IMapper mapper)
+        {
+            if (! await movieRepository.IsExistsAsync(id))
+            {
+                return TypedResults.NotFound();
+            }
+
+            var actorsAlreadyExists = new List<int>();
+            var actorsIds = actorsData.Select(a => a.ActorId).ToList();
+
+            if (actorsData.Count != 0)
+            {
+                actorsAlreadyExists = await actorRepository.ExistsAsync(actorsIds);
+            }
+
+            if (actorsAlreadyExists.Count != actorsData.Count)
+            {
+                var actorsNoAlreadyExists = actorsIds.Except(actorsAlreadyExists);
+                return TypedResults.BadRequest($"actors not exists: {string.Join(", ", actorsNoAlreadyExists)}");
+            }
+
+            var actors = mapper.Map<List<ActorMovie>>(actorsData);
+            await movieRepository.AssignActorsAsync(id, actors);
+
             return TypedResults.NoContent();
         }
     }

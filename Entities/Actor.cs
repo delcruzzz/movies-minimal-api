@@ -12,5 +12,8 @@ namespace MoviesMinimalAPI.Entities
 
         [Unicode(false)]
         public string? Photo { get; set; }
+
+        // 1 : M from actor to actormovie
+        public List<ActorMovie> ActorMovies { get; set; } = new List<ActorMovie>();
     }
 }

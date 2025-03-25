@@ -40,6 +40,10 @@ namespace MoviesMinimalAPI.Repositories
         {
             return await applicationDbContext.Movies
                 .Include(p => p.Comments)
+                .Include(p => p.GenderMovies)
+                    .ThenInclude(gp => gp.Gender)
+                .Include(p => p.ActorMovies)
+                    .ThenInclude(am => am.Actor)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -67,6 +71,25 @@ namespace MoviesMinimalAPI.Repositories
 
             var gendersMovies = gendersIds.Select(genderId => new GenderMovie() { GenderId = genderId });
             movie.GenderMovies = mapper.Map(gendersMovies, movie.GenderMovies);
+            await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task AssignActorsAsync(int id, List<ActorMovie> actors)
+        {
+            for (int i = 1; i <= actors.Count(); i++)
+            {
+                actors[i - 1].Order = i;
+            }
+
+            var movie = await applicationDbContext.Movies
+                .Include(p => p.ActorMovies).FirstOrDefaultAsync(p => p.Id == id);
+
+            if (movie is null)
+            {
+                throw new ArgumentException($"Movie not found");
+            }
+
+            movie.ActorMovies = mapper.Map(actors, movie.ActorMovies);
             await applicationDbContext.SaveChangesAsync();
         }
     }

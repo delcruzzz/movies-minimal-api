@@ -11,5 +11,6 @@ namespace MoviesMinimalAPI.Repositories
         Task<bool> IsExistsAsync(int id);
         Task UpdateAsync(Movie data);
         Task AssignGendersAsync(int id, List<int> gendersIds);
+        Task AssignActorsAsync(int id, List<ActorMovie> actors);
     }
 }

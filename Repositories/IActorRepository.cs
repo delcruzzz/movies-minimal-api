@@ -10,5 +10,6 @@ namespace MoviesMinimalAPI.Repositories
         Task UpdateAsync(Actor data);
         Task DeleteAsync(int id);
         Task<bool> IsExistsAsync(int id);
+        Task<List<int>> ExistsAsync(List<int> ids);
     }
 }

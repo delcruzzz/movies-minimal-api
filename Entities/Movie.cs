@@ -20,5 +20,8 @@ namespace MoviesMinimalAPI.Entities
 
         // 1 : M from movies to gendersmovies
         public List<GenderMovie> GenderMovies { get; set; } = new List<GenderMovie>();
+
+        // 1 : M from movies to actorsmovies
+        public List<ActorMovie> ActorMovies { get; set; } = new List<ActorMovie>();
     }
 }

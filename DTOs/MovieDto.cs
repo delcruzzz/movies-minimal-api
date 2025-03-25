@@ -10,5 +10,11 @@
 
         // comments dto
         public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
+
+        // genders dto
+        public List<GenderDto> Genders { get; set; } = new List<GenderDto>();
+
+        // actorsmovies dto
+        public List<ActorMovieDto> Actors { get; set; } = new List<ActorMovieDto>();
     }
 }
