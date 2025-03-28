@@ -49,5 +49,10 @@ namespace MoviesMinimalAPI.Repositories
             _applicationDbContext.Update(data);
             await _applicationDbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> SameNameExistsAsync(int id, string name)
+        {
+            return await _applicationDbContext.Genders.AnyAsync(g => g.Id != id && g.Name.ToUpper() == name.ToUpper());
+        }
     }
 }

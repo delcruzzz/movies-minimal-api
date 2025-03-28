@@ -4,6 +4,7 @@ using MoviesMinimalAPI;
 using MoviesMinimalAPI.Endpoints;
 using MoviesMinimalAPI.Repositories;
 using MoviesMinimalAPI.Services;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args); // this permits the use of the WebApplication class
 
@@ -47,6 +48,7 @@ builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 builder.Services.AddHttpContextAccessor(); // this adds the http context accessor
 
 builder.Services.AddAutoMapper(typeof(Program)); // this adds the automapper
+builder.Services.AddValidatorsFromAssemblyContaining<Program>(); // use fluent validation for assembly
 
 var app = builder.Build(); // this creates the app instance
 

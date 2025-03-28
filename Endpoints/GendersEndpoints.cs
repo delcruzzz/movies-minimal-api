@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.OutputCaching;
 using MoviesMinimalAPI.DTOs;
 using MoviesMinimalAPI.Entities;
@@ -30,8 +31,15 @@ namespace MoviesMinimalAPI.Endpoints
             });
 
             // endpoint for post gender
-            routeGroupBuilder.MapPost("/", async (CreateGenderDto data, IGenderRepository genderRepository, IOutputCacheStore outputCacheStore, IMapper mapper) =>
+            routeGroupBuilder.MapPost("/", async (CreateGenderDto data, IGenderRepository genderRepository, IOutputCacheStore outputCacheStore, IMapper mapper, IValidator<CreateGenderDto> validator) =>
             {
+                var validationResults = await validator.ValidateAsync(data);
+
+                if (!validationResults.IsValid)
+                {
+                    return TypedResults.ValidationProblem(validationResults.ToDictionary());
+                }
+
                 var gender = mapper.Map<Gender>(data);
 
                 var id = await genderRepository.CreateAsync(gender);
@@ -39,8 +47,15 @@ namespace MoviesMinimalAPI.Endpoints
                 return Results.Created($"/genders/{id}", data);
             });
 
-            routeGroupBuilder.MapPut("/{id:int}", async (int id, CreateGenderDto data, IGenderRepository genderRepository, IOutputCacheStore outputCacheStore, IMapper mapper) =>
+            routeGroupBuilder.MapPut("/{id:int}", async (int id, CreateGenderDto data, IGenderRepository genderRepository, IOutputCacheStore outputCacheStore, IMapper mapper, IValidator<CreateGenderDto> validator) =>
             {
+                var validationResults = await validator.ValidateAsync(data);
+
+                if (!validationResults.IsValid)
+                {
+                    return TypedResults.ValidationProblem(validationResults.ToDictionary());
+                }
+
                 var exists = await genderRepository.IsExistsAsync(id);
 
                 if (!exists)

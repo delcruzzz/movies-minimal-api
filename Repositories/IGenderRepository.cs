@@ -16,5 +16,6 @@ namespace MoviesMinimalAPI.Repositories
         Task UpdateAsync(Gender data);
 
         Task DeleteAsync(int id);
+        Task<bool> SameNameExistsAsync(int id, string name);
     }
 }
